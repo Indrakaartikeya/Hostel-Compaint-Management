@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CampusVoice - A secure and effective college complaint management system for students and administration.">
+    <meta name="keywords" content="college, complaint, system, campus, feedback, reporting">
+    <title>CampusVoice | College Complaint System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>CampusVoice</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="showView('home-view')">HOME</a></li>
+            <li id="submit-nav-item" class="hidden"><a href="#" onclick="showView('form-view')">SUBMIT COMPLAINT</a>
+            </li>
+            <li id="my-complaints-nav-item" class="hidden"><a href="#" onclick="showView('my-complaints-view')">MY
+                    COMPLAINTS</a></li>
+            <li id="admin-nav-item" class="hidden"><a href="#" onclick="showView('admin-view')">DASHBOARD</a></li>
+            <li id="login-nav-item"><a href="#" onclick="showView('login-view')">LOGIN</a></li>
+            <li id="profile-nav-item" class="hidden profile-nav">
+                <div class="profile-icon-wrapper">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <div class="profile-tooltip" id="profile-tooltip-box">
+                        <div class="tooltip-header-card">
+                            <img src="profile_student.png" alt="Student Background" class="card-bg">
+                            <div class="card-overlay"></div>
+                            <div class="card-top-icons">
+                                <i class="fa-solid fa-gear"></i>
+                            </div>
+                            <div class="tooltip-avatar-container">
+                                <div class="tooltip-avatar-main">
+                                    <i class="fa-solid fa-user-astronaut"></i>
+                                </div>
+                            </div>
+                            <div class="card-user-info">
+                                <h3 id="display-name">Campus User</h3>
+                                <p id="display-location">Bangalore, India</p>
+                            </div>
+                        </div>
+                        <div class="tooltip-content-new">
+                            <div class="info-row">
+                                <span class="info-label">ID:</span>
+                                <span id="tooltip-user" class="info-value">1NH24CD032</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Role:</span>
+                                <span id="tooltip-role" class="info-value">Student</span>
+                            </div>
+                            <div class="team-avatars">
+                                <img src="https://i.pravatar.cc/100?u=a" alt="Team">
+                                <img src="https://i.pravatar.cc/100?u=b" alt="Team">
+                                <img src="https://i.pravatar.cc/100?u=c" alt="Team">
+                                <div class="more-avatars">+12</div>
+                            </div>
+                        </div>
+                        <div class="tooltip-footer">
+                            <button class="tooltip-logout-btn" onclick="logout()">
+                                <i class="fa-solid fa-power-off"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="hamburger" id="hamburger-menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <div id="main-content">
+        <!-- Home View -->
+        <main class="view hero-container" id="home-view">
+            <div class="hero-text">
+                <h1>Make Your Voice<br>Heard Today</h1>
+                <p>A secure, anonymous, and effective way to report issues and improve our campus community. We are here
+                    to listen, understand, and take prompt action to ensure a better environment for everyone.</p>
+                <button class="hero-btn" onclick="showView('login-view')">Login</button>
+            </div>
+
+            <div class="hero-collage">
+                <div class="img-wrapper img-1">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80"
+                        alt="Campus Building">
+                </div>
+                <div class="img-wrapper img-2">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80"
+                        alt="Students Group">
+                </div>
+                <div class="img-wrapper img-3">
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80"
+                        alt="Student Studying">
+                </div>
+                <div class="decorative-box"></div>
+            </div>
+
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-regular fa-envelope"></i></a>
+                <a href="#"><i class="fa-solid fa-phone"></i></a>
+            </div>
+        </main>
+
+        <!-- Login View -->
+        <section class="view login-section hidden" id="login-view">
+            <div class="login-card glass-effect">
+                <div class="avatar-container">
+                    <div class="avatar">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                </div>
+                <div class="form-header">
+                    <h2>Portal Login</h2>
+                    <p>Access your account to manage or file complaints</p>
+                </div>
+                <div id="loginError" class="error-msg hidden"></div>
+                <form id="loginForm" class="login-form">
+                    <div class="input-box">
+                        <div class="input-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <input type="text" id="loginUser" placeholder="Username / ID" required>
+                    </div>
+                    <div class="input-box">
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <input type="password" id="loginPass" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">LOGIN</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Complaint Form View -->
+        <section class="view form-section hidden" id="form-view">
+            <div class="form-container glass-effect">
+                <div class="form-header">
+                    <h2>File a Complaint</h2>
+                    <p>Please fill out the details below accurately.</p>
+                </div>
+
+                <form id="complaintForm">
+                    <div class="input-group">
+                        <label for="studentId">User ID</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-id-card"></i>
+                            <input type="text" id="studentId" placeholder="e.g. 1NH24CS001" required>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="department">Department</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-building"></i>
+                                <select id="department" required>
+                                    <option value="" disabled selected>Select Department</option>
+                                    <option value="CSE">Computer Science & Engineering (CSE)</option>
+                                    <option value="DS">Data Science (DS)</option>
+                                    <option value="AIML">AI & Machine Learning (AIML)</option>
+                                    <option value="Mechanical">Mechanical Engineering</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="category">Category</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-list"></i>
+                                <select id="category" required>
+                                    <option value="" disabled selected>Select Category</option>
+                                    <option value="electric">Power & Electricity</option>
+                                    <option value="water">Plumbing & Water</option>
+                                    <option value="food">Catering & Mess</option>
+                                    <option value="lost">Lost & Found Items</option>
+                                    <option value="other">Miscellaneous / Others</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="priority">Urgency Priority</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <select id="priority" required disabled>
+                                <option value="low">Low Priority (Routine)</option>
+                                <option value="medium" selected>Medium Priority (Important)</option>
+                                <option value="high">High Priority (Urgent / Critical)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="subject">Issue Subject</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-heading"></i>
+                            <input type="text" id="subject" placeholder="Brief subject of your complaint" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="attachment">Attach Image (Optional)</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-image"></i>
+                            <input type="file" id="attachment" accept="image/*" class="file-input">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="description">Detailed Description</label>
+                        <div class="input-wrapper textarea-wrapper">
+                            <i class="fa-solid fa-align-left"></i>
+                            <textarea id="description" rows="4" placeholder="Describe the issue in detail..."
+                                required></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Submit Complaint</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+                <div id="successMessage" class="hidden">
+                    <div class="success-icon">
+                        <i class="fa-solid fa-check-circle"></i>
+                    </div>
+                    <h3>Complaint Submitted Successfully!</h3>
+                    <div class="submission-details">
+                        <p><strong>Tracking ID:</strong> <span id="trackingId">#CMP12345</span></p>
+                        <p><strong>From:</strong> <span id="displayUser"></span></p>
+                        <p><strong>Department:</strong> <span id="displayDept"></span></p>
+                        <p><strong>Category:</strong> <span id="displayCat"></span></p>
+                        <div class="complaint-preview">
+                            <strong>Complaint:</strong>
+                            <p id="displayComplaint"></p>
+                        </div>
+                    </div>
+                    <button id="newComplaintBtn" class="outline-btn">Submit Another</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Complaints View (Student) -->
+        <section class="view my-complaints-section hidden" id="my-complaints-view">
+            <div class="admin-container glass-effect">
+                <div class="admin-header">
+                    <div class="header-left">
+                        <h2>My Reports</h2>
+                        <p>Tracking your submitted complaints</p>
+                    </div>
+                </div>
+
+                <div class="complaints-table-wrapper">
+                    <table class="complaints-table">
+                        <thead>
+                            <tr>
+                                <th>Tracking ID</th>
+                                <th>Category</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-complaints-list">
+                            <!-- Student's complaints will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complaint Detail Modal (Admin Only) -->
+        <div id="complaintDetailModal" class="modal-overlay hidden">
+            <div class="detail-card glass-effect">
+                <div class="detail-header">
+                    <div class="header-content">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <h3>Complaint Details</h3>
+                    </div>
+                    <button class="close-modal" onclick="closeDetailModal()">&times;</button>
+                </div>
+                <div class="detail-body">
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="label">ID</span>
+                            <span id="det-id" class="value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Date</span>
+                            <span id="det-date" class="value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Filed By</span>
+                            <span id="det-user" class="value"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Department</span>
+                            <span id="det-dept" class="value"></span>
+                        </div>
+                        <div class="detail-item full-width">
+                            <span class="label">Category</span>
+                            <div class="value-tag category"><span id="det-cat"></span></div>
+                        </div>
+                        <div class="detail-item full-width">
+                            <span class="label">Priority</span>
+                            <div class="value-tag priority"><span id="det-priority"></span></div>
+                        </div>
+                        <div class="detail-item full-width">
+                            <span class="label">Subject</span>
+                            <span id="det-subject" class="value highlight"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="description-block">
+                        <span class="label">Detailed Description</span>
+                        <div id="det-desc" class="description-content"></div>
+                    </div>
+                    
+                    <div id="det-attachment-block" class="description-block hidden">
+                        <span class="label">Attached Image</span>
+                        <div class="attachment-content">
+                            <img id="det-attachment-img" src="" alt="Complaint Attachment" class="modal-attachment-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-footer">
+                    <button class="action-btn pending">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Pending</span>
+                    </button>
+                    <button class="action-btn inprogress">
+                        <i class="fa-solid fa-spinner"></i>
+                        <span>In Progress</span>
+                    </button>
+                    <button class="action-btn resolve">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Approve</span>
+                    </button>
+                    <button class="action-btn reject">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Reject</span>
+                    </button>
+                    <button class="action-btn delete">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Remove</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Admin Dashboard View -->
+        <section class="view admin-section hidden" id="admin-view">
+            <div class="admin-container glass-effect">
+                <div class="admin-header">
+                    <div class="header-left">
+                        <h2>Admin Dashboard</h2>
+                        <p>Managing <span id="complaint-count">0</span> Campus Reports</p>
+                    </div>
+                    <div class="header-right">
+                        <div class="admin-tabs">
+                            <button id="tab-complaints" class="tab-btn active" onclick="switchAdminTab('complaints')">Active</button>
+                            <button id="tab-completed" class="tab-btn" onclick="switchAdminTab('completed')">Completed</button>
+                            <button id="tab-users" class="tab-btn" onclick="switchAdminTab('users')">Users</button>
+                        </div>
+                        <button class="refresh-btn" onclick="refreshAdminData()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Complaints Section -->
+                <div id="admin-complaints-sec">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                            <div class="stat-info">
+                                <h3 id="total-stat">0</h3>
+                                <p>Total Complaints</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon electric"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="stat-info">
+                                <h3 id="electric-stat">0</h3>
+                                <p>Power Issues</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon water"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="stat-info">
+                                <h3 id="water-stat">0</h3>
+                                <p>Water Supply</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon food"><i class="fa-solid fa-utensils"></i></div>
+                            <div class="stat-info">
+                                <h3 id="food-stat">0</h3>
+                                <p>Catering & Mess</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon lost"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div class="stat-info">
+                                <h3 id="lost-stat">0</h3>
+                                <p>Lost & Found</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid priority-stats">
+                        <div class="stat-card high-priority">
+                            <div class="stat-icon high"><i class="fa-solid fa-fire-extinguisher"></i></div>
+                            <div class="stat-info">
+                                <h3 id="high-stat">0</h3>
+                                <p>High Priority</p>
+                            </div>
+                        </div>
+                        <div class="stat-card medium-priority">
+                            <div class="stat-icon medium"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <div class="stat-info">
+                                <h3 id="medium-stat">0</h3>
+                                <p>Medium Priority</p>
+                            </div>
+                        </div>
+                        <div class="stat-card low-priority">
+                            <div class="stat-icon low"><i class="fa-solid fa-circle-info"></i></div>
+                            <div class="stat-info">
+                                <h3 id="low-stat">0</h3>
+                                <p>Low Priority</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="complaints-table-wrapper">
+                        <table class="complaints-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>FILED BY</th>
+                                    <th>CATEGORY</th>
+                                    <th>PRIORITY</th>
+                                    <th>STATUS</th>
+                                    <th>DATE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-complaints-list">
+                                <!-- Complaints will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Completed Section -->
+                <div id="admin-completed-sec" class="hidden">
+                    <div class="admin-header" style="padding-top: 0; border: none; margin-bottom: 20px;">
+                        <h3>Resolved Complaints</h3>
+                    </div>
+                    <div class="complaints-table-wrapper">
+                        <table class="complaints-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>FILED BY</th>
+                                    <th>CATEGORY</th>
+                                    <th>PRIORITY</th>
+                                    <th>STATUS</th>
+                                    <th>DATE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-completed-list">
+                                <!-- Completed complaints will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Users Section -->
+                <div id="admin-users-sec" class="hidden">
+                    <div class="user-management-grid">
+                        <div class="add-user-card">
+                            <h3>Add New User</h3>
+                            <form id="addUserForm">
+                                <div class="input-group">
+                                    <label>Username / ID</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-user"></i>
+                                        <input type="text" id="newUsername" placeholder="e.g. 1NH24CD100" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-lock"></i>
+                                        <input type="password" id="newUserPass" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Role</label>
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                        <select id="newUserRole">
+                                            <option value="student">Student</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="submit-btn small">Add User</button>
+                            </form>
+                        </div>
+
+                        <div class="users-list-card">
+                            <h3>Existing Users</h3>
+                            <div class="complaints-table-wrapper mini">
+                                <table class="complaints-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Role</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-users-list">
+                                        <!-- Users will be injected here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="notification-overlay hidden">
+        <div class="notification-card">
+            <div class="notification-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div class="notification-body">
+                <h3 id="notificationTitle">System Message</h3>
+                <p id="notificationMessage">Message goes here...</p>
+            </div>
+            <div class="notification-footer">
+                <button class="notification-ok-btn" onclick="closeNotification()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
